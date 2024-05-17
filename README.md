@@ -1,2 +1,2 @@
 # ascension
-A (very bad) shell.
+Ascension to Heaven (ATH) is a shell.
