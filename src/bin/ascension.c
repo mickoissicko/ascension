@@ -1,3 +1,5 @@
+#include "../include/common.h"
+
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
@@ -10,7 +12,7 @@ static char* gethome();
 char* ConcatenateCWD(char Cwd[MAXBUF]);
 void Parser(char Str[MAXBUF]);
 
-const char Start[] = "~/";
+const char Start[] = "~";
 
 int Shell(int argc, char** argv)
 {
@@ -34,8 +36,8 @@ int Shell(int argc, char** argv)
         char* Path = Cwd + Len;
         unsigned long PathSize = strlen(Path);
 
-        memmove(Path + 1, Path, strlen(Path));
-        strncpy(Path, Start, 2); 
+        memmove(Path + strlen(Start), Path, PathSize + 1);
+        strncpy(Path, Start, strlen(Start)); 
 
         printf("%s\n", Path);
         printf("> ");
@@ -46,7 +48,6 @@ int Shell(int argc, char** argv)
         Parser(Ui);
     }
 
-    //main(argc, argv);
     return 0;
 }
 
@@ -63,11 +64,36 @@ void Parser(char Str[MAXBUF])
     if (!strcmp(Str, "help"))
     {
         printf("dir: list directories\n");
+        printf("goto: change directory\n");
         printf("exit: close the shell\n");
     }
 
     if (!strcmp(Str, "exit"))
         exit(0);
+
+    if (!strcmp(Str, "dir"))
+        Ls();
+
+    if (!strncmp(Str, "goto", 4))
+    {
+        char* Path = strtok(Str, " ");
+        Path = strtok(NULL, " ");
+
+        if (Path == NULL)
+        {
+            printf("Too few or too many arguments\n");
+            return;
+        }
+
+        if (!strcmp(Path, "~"))
+            chdir(gethome());
+
+        if (Path != NULL && !!strcmp(Path, "~"))
+        {
+            if (chdir(Path) != 0)
+                perror("Could not go to specified path\n");
+        }
+    }
 }
 
 char* ConcatenateCWD(char Cwd[MAXBUF])
@@ -80,37 +106,8 @@ char* ConcatenateCWD(char Cwd[MAXBUF])
     if (strstr(Cwd, Home) != NULL)
         strcpy(CCwd, "~");
     else
-        return CCwd;
+        strcpy(CCwd, Cwd);
 
     return CCwd;
 }
-
-#ifdef __WIN32__
-    static char* gethome()
-    {
-        unsigned long LEN = MAX_STR_LEN;
-
-        char* HomeDirectory = getenv("USERPROFILE");
-
-        return HomeDirectory;
-    }
-#else
-    #include <pwd.h>
-    static char* gethome()
-    {
-        struct passwd *Home;
-
-        char* Path = NULL;
-
-        if ((Home = getpwuid(getuid())) != NULL)
-        {
-            Path = (char*)malloc(MAXBUF);
-
-            if (Path != NULL)
-                strcpy(Path, Home->pw_dir);
-        }
-
-        return Path;
-    }
-#endif
 
