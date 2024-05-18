@@ -27,17 +27,24 @@ int Shell(int argc, char** argv)
         Home = gethome();
         getcwd(Cwd, sizeof(Cwd));
 
-        getcwd(Cwd, MAXBUF);
-        unsigned long Len = strlen(Home);
+        if (strstr(Cwd, Home))
+        {
+            unsigned long Len = strlen(Home);
+            char* Path = Cwd + Len;
+            unsigned long PathSize = strlen(Path);
 
-        char* Path = Cwd + Len;
-        unsigned long PathSize = strlen(Path);
+            memmove(Path + strlen(Start), Path, PathSize + 1);
+            strncpy(Path, Start, strlen(Start)); 
 
-        memmove(Path + strlen(Start), Path, PathSize + 1);
-        strncpy(Path, Start, strlen(Start)); 
+            printf("%s\n", Path);
+            printf("> ");
+        }
 
-        printf("%s\n", Path);
-        printf("> ");
+        else
+        {
+            printf("%s\n", Cwd);
+            printf("> ");
+        }
 
         fgets(Ui, INPUT, stdin);
         Ui[strcspn(Ui, "\n")] = 0;
