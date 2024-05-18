@@ -1,0 +1,9 @@
+run: [cd src && g++ -std=c++17];
+bin: [../bin/ascension];
+src: [boot.c func/dir.cpp bin/ascension.c func/goto.c]
+
+!main{
+    >[run] -o [bin] [src];
+}
+
+!serve{}
