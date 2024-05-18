@@ -71,6 +71,9 @@ void Parser(char Str[MAXBUF])
     if (!strcmp(Str, "dir"))
         Ls();
 
+    if (!strcmp(Str, ".."))
+        chdir("..");
+
     if (!strncmp(Str, "goto", 4))
         DirSwitcher(Str);
 }
