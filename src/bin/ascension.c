@@ -8,11 +8,15 @@
 
 static char* gethome();
 char* ConcatenateCWD(char Cwd[MAXBUF]);
+void Parser(char Str[MAXBUF]);
 
-const char Start = '~';
+const char Start[] = "~/";
 
-int main(int argc, char** argv)
+int Shell(int argc, char** argv)
 {
+    printf("Welcome to the Ascension Shell\n");
+    printf("Type help for a list of commands\n");
+
     char* Home = gethome();
     char* CCwd;
 
@@ -28,17 +32,42 @@ int main(int argc, char** argv)
         unsigned long Len = strlen(Home);
 
         char* Path = Cwd + Len;
-        strcat(Path, &Start);
+        unsigned long PathSize = strlen(Path);
+
+        memmove(Path + 1, Path, strlen(Path));
+        strncpy(Path, Start, 2); 
 
         printf("%s\n", Path);
-        fgets(Ui, INPUT, stdin);
+        printf("> ");
 
-        if (!!strcmp(Ui, "") || !!strcmp(Ui, NULL))
-            ParseCommands();
+        fgets(Ui, INPUT, stdin);
+        Ui[strcspn(Ui, "\n")] = 0;
+
+        Parser(Ui);
     }
 
     //main(argc, argv);
     return 0;
+}
+
+void Parser(char Str[MAXBUF])
+{
+    unsigned long Siz = strlen(Str);
+
+    if (Siz > MAXBUF)
+    {
+        printf("buffer overflow\n");
+        exit(1);
+    }
+
+    if (!strcmp(Str, "help"))
+    {
+        printf("dir: list directories\n");
+        printf("exit: close the shell\n");
+    }
+
+    if (!strcmp(Str, "exit"))
+        exit(0);
 }
 
 char* ConcatenateCWD(char Cwd[MAXBUF])
