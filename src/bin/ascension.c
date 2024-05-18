@@ -16,9 +16,6 @@ const char Start[] = "~";
 
 int Shell(int argc, char** argv)
 {
-    printf("Welcome to the Ascension Shell\n");
-    printf("Type help for a list of commands\n");
-
     char* Home = gethome();
     char* CCwd;
 
