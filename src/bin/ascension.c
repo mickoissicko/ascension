@@ -75,25 +75,7 @@ void Parser(char Str[MAXBUF])
         Ls();
 
     if (!strncmp(Str, "goto", 4))
-    {
-        char* Path = strtok(Str, " ");
-        Path = strtok(NULL, " ");
-
-        if (Path == NULL)
-        {
-            printf("Too few or too many arguments\n");
-            return;
-        }
-
-        if (!strcmp(Path, "~"))
-            chdir(gethome());
-
-        if (Path != NULL && !!strcmp(Path, "~"))
-        {
-            if (chdir(Path) != 0)
-                perror("Could not go to specified path\n");
-        }
-    }
+        DirSwitcher(Str);
 }
 
 char* ConcatenateCWD(char Cwd[MAXBUF])
