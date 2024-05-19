@@ -1,5 +1,7 @@
+#include <sys/stat.h>
 #include <string.h>
 #include <stdio.h>
+#include <unistd.h>
 
 void Mkf(char Filename[], int Mode)
 {
@@ -50,6 +52,41 @@ void Mkf(char Filename[], int Mode)
     }
 }
 
-void Mkd()
-{}
+void Mkd(char Directory[], int Mode)
+{
+    if (Mode == 0)
+    {
+        if (mkdir(Directory, 0777) != 0)
+        {
+            perror("Could not make directory");
+            return;
+        }
+
+        else
+            printf("Made %s\n", Directory);
+    }
+
+    else if (Mode == 1)
+    {
+        if (mkdir(Directory, 0777) != 0)
+        {
+            if (rmdir(Directory) != 0)
+            {
+                perror("Error removing");
+                return;
+            }
+
+            else
+            {
+                if (mkdir(Directory, 0777) != 0)
+                {
+                    perror("Could not make");
+                    return;
+                }
+
+                printf("Made %s\n", Directory);
+            }
+        }
+    }
+}
 
