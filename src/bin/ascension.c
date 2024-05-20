@@ -83,6 +83,9 @@ void Parser(char Str[MAXBUF])
 
     if (!strncmp(Str, "goto", 4))
         DirSwitcher(Str);
+
+    if (!strncmp(Str, "mkf", 3) || !strncmp(Str, "mkd", 3))
+        PrepareForCreation(Str);
 }
 
 char* ConcatenateCWD(char Cwd[MAXBUF])
