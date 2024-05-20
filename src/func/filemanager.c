@@ -7,6 +7,56 @@
 #define UNINITIALISED -1
 #define MAX_BUF 4096
 
+void Rmf(char Filename[], int Mode)
+{
+    char Ui;
+
+    if (Mode == 0)
+    {
+        printf("Delete file? [y/n]: ");
+        scanf(" %c", &Ui);
+
+        if (!strcasecmp(&Ui, "y"))
+            if (remove(Filename) != 0)
+            {
+                perror("Could not delete file");
+                return;
+            }
+    }
+
+    if (Mode == 1)
+        if (remove(Filename) != 0)
+        {
+            perror("Could not delete file");
+            return;
+        }
+}
+
+void Rmd(char Filename[], int Mode)
+{
+    char Ui;
+
+    if (Mode == 0)
+    {
+        printf("Delete file? [y/n]: ");
+        scanf(" %c", &Ui);
+
+        if (!strcasecmp(&Ui, "y"))
+            if (rmdir(Filename) != 0)
+            {
+                perror("Could not delete file");
+                return;
+            }
+    }
+
+    if (Mode == 1)
+        if (rmdir(Filename) != 0)
+        {
+            perror("Could not delete file");
+            return;
+        }
+}
+
 void Mkf(char Filename[], int Mode)
 {
     if (Mode == 0)
@@ -101,23 +151,49 @@ void Mkd(char Directory[], int Mode)
 
 void PrepareForCreation(char String[])
 {
-    char Discard[MAX_BUF];
-    char Filename[MAX_BUF];
     int Mode = UNINITIALISED;
+
+    char Filename[MAX_BUF];
+    char Discard[MAX_BUF];
+    char Ui;
 
     sscanf(String, "%s %s %d", Discard, Filename, &Mode);
 
-    if (Mode == UNINITIALISED)
-    {
+    if (
+        Mode == UNINITIALISED &&
+        !strncmp(String, "mkf", 3) ||
+        !strncmp(String, "mkd", 3)
+    ){
         printf("No (valid) mode provided\n");
         return;
     }
 
-    if (Mode > 1)
+    else if (Mode == UNINITIALISED)
     {
+        printf("Will use 0\n");
+        Mode = 0;
+    }
+
+    if (
+        Mode > 1 &&
+        !strncmp(String, "mkf", 3) ||
+        !strncmp(String, "mkd", 3) 
+    ){
         printf("Currently two modes available:\n");
         printf("1: Overwrite\n");
         printf("0: Passive\n");
+        return;
+    }
+
+    else if (
+        Mode > 2 &&
+        !strncmp(String, "rmd", 3) ||
+        !strncmp(String, "rmf", 3)
+    ){
+        printf("Currently three modes available\n");
+        printf("2 (rmd): Recursively delete\n");
+        printf("1: Delete without prompt\n");
+        printf("0: Default if unspecified\n");
     }
 
     if (!strncmp(String, "mkf", 3))
@@ -125,5 +201,11 @@ void PrepareForCreation(char String[])
 
     if (!strncmp(String, "mkd", 3))
         Mkd(Filename, Mode);
+
+    if (!strncmp(String, "rmf", 3))
+        Rmf(Filename, Mode);
+
+    if (!strncmp(String, "rmd", 3))
+        Rmd(Filename, Mode);
 }
 
