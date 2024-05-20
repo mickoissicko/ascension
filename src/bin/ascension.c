@@ -84,7 +84,12 @@ void Parser(char Str[MAXBUF])
     if (!strncmp(Str, "goto", 4))
         DirSwitcher(Str);
 
-    if (!strncmp(Str, "mkf", 3) || !strncmp(Str, "mkd", 3))
+    if (
+        !strncmp(Str, "mkf", 3) ||
+        !strncmp(Str, "mkd", 3) ||
+        !strncmp(Str, "rmd", 3) ||
+        !strncmp(Str, "rmf", 3)
+    )
         PrepareForCreation(Str);
 }
 
