@@ -1,7 +1,10 @@
+#include <stdlib.h>
 #include <sys/stat.h>
 #include <string.h>
 #include <unistd.h>
 #include <stdio.h>
+
+#define MAX_BUF 4096
 
 void Mkf(char Filename[], int Mode)
 {
@@ -88,5 +91,27 @@ void Mkd(char Directory[], int Mode)
             }
         }
     }
+}
+
+void PrepareForCreation(char String[])
+{
+    char Discard[MAX_BUF];
+    char Filename[MAX_BUF];
+    int Mode;
+
+    sscanf(String, "%s %s %d", Discard, Filename, &Mode);
+
+    if (Mode > 1)
+    {
+        printf("Currently two modes available:\n");
+        printf("1: Overwrite\n");
+        printf("0: Passive\n");
+    }
+
+    if (!strncmp(String, "mkf", 3))
+        Mkf(Filename, Mode);
+
+    if (!strncmp(String, "mkd", 3))
+        Mkd(Filename, Mode);
 }
 
