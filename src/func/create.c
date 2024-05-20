@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <stdio.h>
 
+#define UNINITIALISED -1
 #define MAX_BUF 4096
 
 void Mkf(char Filename[], int Mode)
@@ -17,10 +18,15 @@ void Mkf(char Filename[], int Mode)
         }
 
         FILE* File;
-        File = fopen(Filename, "w");
+        File = fopen(Filename, "r");
 
         if (File != NULL)
+        {
             fclose(File);
+            printf("File already exists!\n");
+            return;
+        }
+    
         else
             perror("Could not make file");
     }
@@ -97,9 +103,15 @@ void PrepareForCreation(char String[])
 {
     char Discard[MAX_BUF];
     char Filename[MAX_BUF];
-    int Mode;
+    int Mode = UNINITIALISED;
 
     sscanf(String, "%s %s %d", Discard, Filename, &Mode);
+
+    if (Mode == UNINITIALISED)
+    {
+        printf("No (valid) mode provided\n");
+        return;
+    }
 
     if (Mode > 1)
     {
