@@ -7,6 +7,7 @@
 #define UNINITIALISED -1
 #define MAX_BUF 4096
 
+void RRmd(char Filename[]);
 void Rmf(char Filename[], int Mode)
 {
     char Ui;
@@ -55,6 +56,9 @@ void Rmd(char Filename[], int Mode)
             perror("Could not delete file");
             return;
         }
+
+    if (Mode == 2)
+        RRmd(Filename);
 }
 
 void Mkf(char Filename[], int Mode)
