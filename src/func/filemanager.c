@@ -163,42 +163,20 @@ void PrepareForCreation(char String[])
 
     sscanf(String, "%s %s %d", Discard, Filename, &Mode);
 
-    if (
-        Mode == UNINITIALISED &&
-        !strncmp(String, "mkf", 3) ||
-        !strncmp(String, "mkd", 3)
-    ){
-        printf("No (valid) mode provided\n");
-        return;
-    }
 
-    else if (Mode == UNINITIALISED)
-    {
-        printf("Will use 0\n");
-        Mode = 0;
-    }
+    if (!strncmp(String, "mkf", 3) || !strncmp(String, "mkf", 3) || !strncmp(String, "rmf", 3))
+        if (Mode == UNINITIALISED || Mode > 1)
+        {
+            printf("Invalid mode\n");
+            return;
+        }
 
-    if (
-        Mode > 1 &&
-        !strncmp(String, "mkf", 3) ||
-        !strncmp(String, "mkd", 3) 
-    ){
-        printf("Currently two modes available:\n");
-        printf("1: Overwrite\n");
-        printf("0: Passive\n");
-        return;
-    }
-
-    else if (
-        Mode > 2 &&
-        !strncmp(String, "rmd", 3) ||
-        !strncmp(String, "rmf", 3)
-    ){
-        printf("Currently three modes available\n");
-        printf("2 (rmd): Recursively delete\n");
-        printf("1: Delete without prompt\n");
-        printf("0: Default if unspecified\n");
-    }
+    else if (!strncmp(String, "rmd", 3))
+        if (Mode > 2)
+        {
+            printf("Invalid mode\n");
+            return;
+        }
 
     if (!strncmp(String, "mkf", 3))
         Mkf(Filename, Mode);
