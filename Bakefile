@@ -3,7 +3,7 @@ bin: [../bin/ascension];
 src: [func/clrscr.c func/rrmd.cpp func/filemanager.c boot.c func/dir.cpp bin/ascension.c func/goto.c]
 
 !main{
-    >[run] -o [bin] [src];
+    >[run] -o [bin] [src] -lreadline;
 }
 
 !serve{}
