@@ -47,7 +47,7 @@ static char* gethome();
 int Shell(int argc, char** argv);
 void Parser(char Str[MAXBUF]);
 void ClearScreen(char Str[]);
-void PrintOS();
+char* PrintOS();
 void Mkf();
 void Mkd();
 void Ls();
