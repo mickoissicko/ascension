@@ -163,7 +163,6 @@ void PrepareForCreation(char String[])
 
     sscanf(String, "%s %s %d", Discard, Filename, &Mode);
 
-
     if (
         !strncmp(String, "mkf", 3) ||
         !strncmp(String, "mkd", 3) ||
