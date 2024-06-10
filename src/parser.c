@@ -1,3 +1,4 @@
+#include "include/asc_macros.h"
 #include "include/common.h"
 
 #include <stdio.h>
@@ -29,11 +30,16 @@ void Parser(char Str[MAXBUF])
         printf("..: step back a directory\n");
     }
 
+    if (!strcmp(Str, "out $OS"))
+    {
+        char* System = PrintOS();
+        printf("%s\n", System);
+
+        free(System);
+    }
+
     if (!strncmp(Str, "clrscr", 6))
         ClearScreen(Str);
-
-    if (!strcmp(Str, "out $os"))
-        PrintOS();
 
     if (!strcmp(Str, "exit"))
         exit(0);
