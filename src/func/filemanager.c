@@ -171,10 +171,10 @@ void PrepareForCreation(char String[])
     )
         if (Mode == UNINITIALISED || Mode > 1)
         {
-            char Array[] = {[0]=String[0], [1]=String[1], [2]=String[2]};
+            char Cmd[] = {[0]=String[0], [1]=String[1], [2]=String[2]};
         
             printf("Invalid mode\n");
-            printf("%s [0-1] (filename)\n", Array);
+            printf("%s [0-1] (filename)\n", Cmd);
 
             return;
         }
