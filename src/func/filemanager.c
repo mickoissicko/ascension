@@ -164,19 +164,28 @@ void PrepareForCreation(char String[])
     sscanf(String, "%s %s %d", Discard, Filename, &Mode);
 
 
-    if (!strncmp(String, "mkf", 3) || !strncmp(String, "mkf", 3) || !strncmp(String, "rmf", 3))
+    if (
+        !strncmp(String, "mkf", 3) ||
+        !strncmp(String, "mkd", 3) ||
+        !strncmp(String, "rmf", 3)
+    )
         if (Mode == UNINITIALISED || Mode > 1)
         {
+            char Array[] = {[0]=String[0], [1]=String[1], [2]=String[2]};
+        
             printf("Invalid mode\n");
+            printf("%s [0-1] (filename)\n", Array);
+
             return;
         }
 
-    else if (!strncmp(String, "rmd", 3))
-        if (Mode > 2)
-        {
-            printf("Invalid mode\n");
-            return;
-        }
+    if (!strncmp(String, "rmd", 3))
+    {
+        printf("Invalid mode\n");
+        printf("rmd [0-2] (dirname)\n");
+
+        return;
+    }
 
     if (!strncmp(String, "mkf", 3))
         Mkf(Filename, Mode);

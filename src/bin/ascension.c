@@ -70,6 +70,11 @@ void Parser(char Str[MAXBUF])
         printf("dir: list directories\n");
         printf("goto: change directory\n");
         printf("exit: close the shell\n");
+        printf("mkf: make file");
+        printf("mkd: make directory\n");
+        printf("rmf: delete file\n");
+        printf("rmd: delete directory\n");
+        printf("..: step back a directory\n");
     }
 
     if (!strcmp(Str, "exit"))
