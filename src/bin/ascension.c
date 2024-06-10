@@ -67,15 +67,19 @@ void Parser(char Str[MAXBUF])
 
     if (!strcmp(Str, "help"))
     {
-        printf("dir: list directories\n");
+        printf("clrscr: clear screen\n");
         printf("goto: change directory\n");
         printf("exit: close the shell\n");
+        printf("dir: list directories\n");
         printf("mkf: make file");
         printf("mkd: make directory\n");
         printf("rmf: delete file\n");
         printf("rmd: delete directory\n");
         printf("..: step back a directory\n");
     }
+
+    if (!strncmp(Str, "clrscr", 6))
+        ClearScreen(Str);
 
     if (!strcmp(Str, "exit"))
         exit(0);
