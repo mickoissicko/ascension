@@ -45,6 +45,7 @@ void PrepareForCreation(char String[]);
 void DirSwitcher(char Dir[]);
 static char* gethome();
 int Shell(int argc, char** argv);
+void ClearScreen(char Str[]);
 void Mkf();
 void Mkd();
 void Ls();
