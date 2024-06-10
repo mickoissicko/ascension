@@ -1,34 +1,42 @@
-#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-void PrintOS()
+#define BUF 512
+
+char* PrintOS()
 {
+    char* OperatingSystem;
+    OperatingSystem = (char*)malloc(BUF * sizeof(char));
+
     #ifdef _WIN32
         #ifdef _WIN64
-            printf("Windows x64\n");
+            strcpy(OperatingSystem, "Windows-x64")
         #else
-            printf("Windows x86\n");
+            strcpy(OperatingSystem, "Windows-x86");
     #endif
 
     #elif defined(__CYGWIN__)
-        printf("CYGWIN\n");
+        strcpy(OperatingSystem, "CYGWIN");
 
     #elif defined(__unix__) || defined(unix) || defined(__unix)
-        printf("Unix or *BSD\n");
+        strcpy(OperatingSystem, "Unix-based (or *BSD)");
 
     #elif defined(__APPLE__) && defined(__MACH__)
-        printf("Mac OS\n");
+        strcpy(OperatingSystem, "Mac OS");
 
     #elif defined(linux)
-        printf("Linux\n");
+        strcpy(OperatingSystem, "Linux");
 
     #elif defined(__FreeBSD__)
-        printf("FreeBSD\n");
+        strcpy(OperatingSystem, "FreeBSD");
 
     #elif defined(__ANDROID__)
-        printf("Android\n");
+        strcpy(OperatingSystem, "Android");
 
     #elif defined(__linux__) || defined(__linux)
-        printf("Unknown\n");
+        strcpy(OperatingSystem, "?");
     #endif
+
+    return OperatingSystem;
 }
 
