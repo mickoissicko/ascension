@@ -4,6 +4,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 
 #define MAXBUF 8192
 #define INPUT 4096
@@ -17,10 +19,8 @@ const char Start[] = "~";
 int Shell(int argc, char** argv)
 {
     char* Home = gethome();
-    char* CCwd;
-
     char Cwd[MAXBUF];
-    char Ui[INPUT];
+    char* Ui;
 
     while (1)
     {
@@ -37,19 +37,26 @@ int Shell(int argc, char** argv)
             strncpy(Path, Start, strlen(Start)); 
 
             printf("%s\n", Path);
-            printf("> ");
         }
 
         else
         {
             printf("%s\n", Cwd);
-            printf("> ");
         }
 
-        fgets(Ui, INPUT, stdin);
-        Ui[strcspn(Ui, "\n")] = 0;
+        printf("> ");
 
+        Ui = readline("");
+        if (Ui == NULL)
+        {
+            printf("Error reading input\n");
+            continue;
+        }
+
+        add_history(Ui);
         Parser(Ui);
+
+        free(Ui);
     }
 
     return 0;
