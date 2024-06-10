@@ -174,18 +174,19 @@ void PrepareForCreation(char String[])
             char Cmd[] = {[0]=String[0], [1]=String[1], [2]=String[2]};
         
             printf("Invalid mode\n");
-            printf("%s [0-1] (filename)\n", Cmd);
+            printf("%s (filename) [0-1]\n", Cmd);
 
             return;
         }
 
-    if (!strncmp(String, "rmd", 3))
-    {
-        printf("Invalid mode\n");
-        printf("rmd [0-2] (dirname)\n");
+    else if (!strncmp(String, "rmd", 3))
+        if (Mode == UNINITIALISED || Mode > 2)
+        {
+            printf("Invalid mode\n");
+            printf("rmd (dirname) [0-2]\n");
 
-        return;
-    }
+            return;
+        }
 
     if (!strncmp(String, "mkf", 3))
         Mkf(Filename, Mode);
