@@ -1,9 +1,0 @@
-run: [cd src && g++ -std=c++17];
-bin: [../bin/ascension];
-src: [func/clrscr.c func/prntos.c func/rrmd.cpp func/filemanager.c boot.c parser.c func/dir.cpp env/ascension.c func/goto.c]
-
-!main{
-    >[run] -o [bin] [src] -lreadline;
-}
-
-!serve{}

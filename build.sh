@@ -1,0 +1,1 @@
+gcc -o bin/bin src/main.c src/std/mem/alloc.c
