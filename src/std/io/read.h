@@ -3,7 +3,7 @@
 #include "../../decl/decl.h"
 #include "../str/trm.h"
 
-char* readinpt(void)
+static inline char* readinpt(void)
 {
     extern long read(int, char *, unsigned long);
 

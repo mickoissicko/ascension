@@ -2,7 +2,7 @@
 #define MKINT_H
 #include "../io/write.h"
 
-int makeint(char* s)
+static inline int makeint(char* s)
 {
     int sign = 1;
     int _int = 0;

@@ -2,7 +2,7 @@
 #define SUB_H
 #define NULL 0
 
-char* findsub(const char* s1, const char* s2)
+static inline char* findsub(const char* s1, const char* s2)
 {
     if (!*s2)
         return (char*)s1;

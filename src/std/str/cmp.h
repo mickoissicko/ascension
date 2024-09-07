@@ -1,7 +1,7 @@
 #ifndef CMP_H
 #define CMP_H
 
-int cmpstr(const char* a, const char* b)
+static inline int cmpstr(const char* a, const char* b)
 {
     for (;;)
     {

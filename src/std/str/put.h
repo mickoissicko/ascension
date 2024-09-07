@@ -2,7 +2,7 @@
 #define PUT_H
 #include "../../decl/decl.h"
 
-void putstr(char dst[], const char src[], size_t n)
+static inline void putstr(char dst[], const char src[], size_t n)
 {
     size_t i;
 

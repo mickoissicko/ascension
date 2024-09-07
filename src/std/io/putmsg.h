@@ -6,7 +6,7 @@
 // PUTMSG IS DEPRECATED
 // PLEASE USE ECHO
 
-int putmsg(int n, char** args)
+static inline int putmsg(int n, char** args)
 {
     if (n < 2)
     {

@@ -3,13 +3,11 @@
 #include "../../decl/decl.h"
 #include "../str.h"
 
-void println(int br)
-{
-    if (br)
+#define println(br) \
+    if (br)         \
         putchar('\n');
-}
 
-void writeln(const char ln[])
+static inline void writeln(const char ln[])
 {
     size_t len = lenstr(ln);
 
@@ -17,11 +15,8 @@ void writeln(const char ln[])
         putchar(ln[i]);
 }
 
-void writebuf(const char* buf)
-{
-    extern long write(int, const char *, unsigned long);
-
+#define writebuf(buf)                                     \
+    extern long write(int, const char *, unsigned long);  \
     write(1, buf, lenstr(buf));
-}
 
 #endif

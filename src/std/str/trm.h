@@ -1,12 +1,9 @@
 #ifndef TRM_H
 #define TRM_H
 
-void trmstr(char* s, char* r)
-{
-    //
-}
+// static inline void trmstr(char* s, char* r) {}
 
-void trmchr(char* s, char r)
+static inline void trmchr(char* s, char r)
 {
     int i = 0, j = 0;
 

@@ -7,7 +7,7 @@ typedef struct
     char e[32];
 } Command;
 
-size_t cpybytes(char* dst, const char* src, size_t sz)
+static inline size_t cpybytes(char* dst, const char* src, size_t sz)
 {
     size_t len = 0;
 
@@ -26,12 +26,12 @@ size_t cpybytes(char* dst, const char* src, size_t sz)
     return len;
 }
 
-void cpystr(char* dst, const char src[])
+static inline void cpystr(char* dst, const char src[])
 {
     putstr(dst, src, sizeof(dst));
 }
 
-void cpystruct(Command* cmd, const char str[])
+static inline void cpystruct(Command* cmd, const char str[])
 {
     putstr(cmd->e, str, sizeof(cmd->e));   
 }
