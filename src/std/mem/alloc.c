@@ -3,13 +3,15 @@
 
 struct BD_t;
 
-typedef struct BD_t {
+typedef struct BD_t
+{
     int blksz;
     struct BD_t* prev;
     struct BD_t* next;
 } BD_t;
 
-typedef struct HEAP_INFO_t {
+typedef struct HEAP_INFO_t
+{
     void* heap;
     size_t sz;
     BD_t* alloc_dll;
@@ -44,8 +46,10 @@ void* alloc(HEAP_INFO_t* heapinfo, size_t sz)
     {
         int remaining = c->blksz-sz;
 
-        if (remaining > 0) {
-            if ((unsigned int)remaining > sizeof(BD_t)) {
+        if (remaining > 0)
+        {
+            if ((unsigned int)remaining > sizeof(BD_t))
+            {
                 c->blksz = sz;
                 
                 BD_t* newblk = (void*)c + sizeof(BD_t) + sz;
@@ -55,11 +59,15 @@ void* alloc(HEAP_INFO_t* heapinfo, size_t sz)
                 newblk->next = c->next;
                 newblk->prev = c->prev;
 
-                if(c->next != NULL) {
+                if(c->next != NULL)
                     c->next->prev = newblk;
-                }
-            } else {
+
+            }
+
+            else
+            {
                 c->prev->next = c->next;
+
                 if (c->next != NULL)
                     c->next->prev = c->prev;
             }
@@ -92,9 +100,11 @@ void memfree(HEAP_INFO_t* heapinfo, void* ptr)
 
     BD_t* c = heapinfo->avail_dll;
 
-    while(c->next != NULL) {
+    while(c->next != NULL)
+    {
         if(c->next > bd)
             break;
+
         c = c->next;
     }
 
@@ -102,20 +112,24 @@ void memfree(HEAP_INFO_t* heapinfo, void* ptr)
     c->next = bd;
 
     bd->prev = c;
+
     if(bd->next != NULL)
         bd->next->prev = bd;
 
-    if (((void*)bd + sizeof(BD_t) + bd->blksz) == (bd->next)) {
+    if (((void*)bd + sizeof(BD_t) + bd->blksz) == (bd->next))
+    {
         bd->blksz = bd->blksz + sizeof(BD_t) + bd->next->blksz;
-
         bd->next = bd->next->next;
+
         if(bd->next != NULL)
             bd->next->prev = bd;
     }   
 
-    if(((void*)c + sizeof(BD_t) + c->blksz) == bd) {
+    if(((void*)c + sizeof(BD_t) + c->blksz) == bd)
+    {
         c->blksz = c->blksz + sizeof(BD_t) + bd->blksz;
         c->next = bd->next;
+
         if(c->next != NULL)
             c->next->prev = c;
     }

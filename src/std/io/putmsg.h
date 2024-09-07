@@ -6,8 +6,10 @@
 // PUTMSG IS DEPRECATED
 // PLEASE USE ECHO
 
-int putmsg(int n, char** args) {
-    if (n < 2) {
+int putmsg(int n, char** args)
+{
+    if (n < 2)
+    {
         writeln("Usage: <cmd> (<args>)");
         return 1;
     }
@@ -19,14 +21,16 @@ int putmsg(int n, char** args) {
 
     cpystruct(ptr, "echo");
 
-    if (cmpstr(args[1], ptr->e) == 0) {
-        if (n > 2) {
+    if (cmpstr(args[1], ptr->e) == 0)
+    {
+        if (n > 2)
             writeln(args[2]);
-        }
 
         else
             writeln("No argument provided");
-    } else
+    }
+
+    else
         writeln("Invalid command");
 
     cpystruct(ptr, "::n");

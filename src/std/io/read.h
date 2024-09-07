@@ -3,7 +3,8 @@
 #include "../../decl/decl.h"
 #include "../str/trm.h"
 
-char* readinpt(void) {
+char* readinpt(void)
+{
     extern long read(int, char *, unsigned long);
 
     static char buf[8192];
@@ -13,6 +14,7 @@ char* readinpt(void) {
 
     if (readbytes > 0)
         buf[readbytes] = '\0';
+
     else
         buf[0] = '\0';
 

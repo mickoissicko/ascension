@@ -4,13 +4,15 @@
 
 struct BD_t;
 
-typedef struct BD_t {
+typedef struct BD_t
+{
     int blksz;
     struct BD_t* prev;
     struct BD_t* next;
 } BD_t;
 
-typedef struct HEAP_INFO_t {
+typedef struct HEAP_INFO_t
+{
     void* heap;
     size_t sz;
     BD_t* alloc_dll;

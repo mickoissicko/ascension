@@ -2,7 +2,8 @@
 #define LEN_H
 #include "../../decl/decl.h"
 
-size_t lenstr(const char str[]) {
+size_t lenstr(const char str[])
+{
     const char* s = str;
 
     while (*s)

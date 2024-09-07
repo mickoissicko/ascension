@@ -1,7 +1,8 @@
 #ifndef CMP_H
 #define CMP_H
 
-int cmpstr(const char* a, const char* b) {
+int cmpstr(const char* a, const char* b)
+{
     for (;;)
     {
         if (*a != *b)

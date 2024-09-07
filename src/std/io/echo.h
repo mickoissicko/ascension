@@ -2,7 +2,8 @@
 #define ECHO_H
 #include "write.h"
 
-int echo(char rawstr[]) {
+int echo(char rawstr[])
+{
     
 }
 
