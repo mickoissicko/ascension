@@ -1,114 +1,145 @@
 #ifndef SHELL_H
 #define SHELL_H
-#define MAX_VAR_COUNT 32
-#define MAX_VAR_LEN 256
-#define MAX_VAR 100
+#define MAX__var_COUNT 32
+#define MAX__var_LEN 256
+#define MAX__var 100
 #define NULL 0
-#include "../std/io.h"
+#include "../std/symbols/map.h"
+#include "../std/io/write.h"
+#include "../decl/decl.h"
 #include "../std/str.h"
+#include "../std/num.h"
 
-typedef struct {
-    char name[MAX_VAR_COUNT];
-    char val[MAX_VAR_LEN];
-} Variables;
+typedef struct
+{
+    char name[MAX__var_COUNT];
+    char val[MAX__var_LEN];
+} _variables;
 
-Variables vars[MAX_VAR];
-int vc = 0;
+static _variables _vars[MAX__var];
+static int vc = 0;
 
-void setvar(const char* name, const char* val) {
+void set_var(const char* name, const char* val)
+{
     for (int i = 0; i < vc; i++)
-        if (cmpstr(vars[i].name, name) == 0) {
-            cpybytes(vars[i].val, val, MAX_VAR_LEN);
-
+        if (cmpstr(_vars[i].name, name) == 0)
+        {
+            cpybytes(_vars[i].val, val, MAX__var_LEN);
             return;
         }
 
-    if (vc < MAX_VAR) {
-        cpybytes(vars[vc].name, name, MAX_VAR_COUNT);
-        cpybytes(vars[vc].val, val, MAX_VAR_LEN);
+    if (vc < MAX__var)
+    {
+        cpybytes(_vars[vc].name, name, MAX__var_COUNT);
+        cpybytes(_vars[vc].val, val, MAX__var_LEN);
         vc++;
     }
 }
 
-const char* getvar(const char* name) {
+const char* get_var(const char* name)
+{
     for (int i = 0; i < vc; i++)
-        if (cmpstr(vars[i].name, name) == 0)
-            return vars[i].val;
+        if (cmpstr(_vars[i].name, name) == 0)
+            return _vars[i].val;
 
     return NULL;
 }
 
-void procdef(char* input) {
+void procdef(char* input)
+{
     char* name = input + lenstr("def ");
-
     char* equals = chrstr(name, '=');
-    if (equals != NULL) {
+
+    if (equals != NULL)
+    {
         *equals = '\0';
         char* val = equals + 1;
         
         while (*val == ' ') val++;
         trmchr(name, ' ');
-        setvar(name, val);
-    } else {
-        writeln("Syntax error in `def` command.");
-
+        set_var(name, val);
+    }
+    else
+    {
+        writeln("Syntax error in def command.");
         println(1);
         writeln("\n");
     }
 }
 
-void parse(char* input) {
-    char* start = input + 5;
-    char output[8192];
-    char* finalptr = output;
+void extractval(char* input, char* outpt)
+{
+    char* start = input;
+    char* finalptr = outpt;
 
     while (*start)
-        if (*start == '$') {
+    {
+        if (*start == '$')
+        {
             start++;
             char* end = start;
 
             while (*end && *end != ' ' && *end != '\0' && *end != '$')
                 end++;
 
-            char var[MAX_VAR_COUNT];
+            char _var[MAX__var_COUNT];
+            cpybytes(_var, start, end - start + 1);
 
-            cpybytes(var, start, end - start + 1);
-            var[end - start] = '\0'; 
-            
-            const char* var_val = getvar(var);
+            _var[end - start] = '\0'; 
+            const char* _var_val = get_var(_var);
 
-            if (var_val)
-                finalptr += cpybytes(finalptr, var_val, MAX_VAR_LEN);
+            if (_var_val)
+                finalptr += cpybytes(finalptr, _var_val, MAX__var_LEN);
 
-            else {
-                writeln("Undefined Variables: ");
-                writeln(var);
+            else
+            {
+                writeln("Undefined _variable: ");
+                writeln(_var);
                 println(1);
-
                 return;
             }
 
             start = end;
-        } else
+        }
+
+        else
             *finalptr++ = *start++;
+    }
 
     *finalptr = '\0';
+}
 
-    writeln(output);
+void parse(char* input)
+{
+    char outpt[8192];
+    extractval(input + 5, outpt);
+
+    writeln(outpt);
     println(1);
 }
 
-void exec(char* input) {
-    if (findsub(input, "def") == input)
-        procdef(input);
+char* run(char* input)
+{
+    static char _var[8192];
+    
+    extractval(input, _var);
 
-    else if (findsub(input, "echo") == input)
-        parse(input);
+    if (findsub(_var, var(2)) == _var)
+        procdef(_var);
 
-    else {
+    else if (findsub(_var, var(1)) == _var)
+        parse(_var);
+
+    else if (findsub(_var, var(0)) == _var)
+        return _var;
+
+    else
+    {
         writeln("Unknown command");
         println(1);
     }
+
+    return NO_EXIT_EVENT;
 }
 
 #endif
