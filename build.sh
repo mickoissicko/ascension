@@ -1,1 +1,2 @@
-gcc -o bin/bin src/proc.c src/main.c src/std/mem/alloc.c
+#!/bin/bash
+gcc -o bin/bin src/main.c src/proc.c src/std/mem/alloc.
