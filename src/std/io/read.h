@@ -1,12 +1,15 @@
 #ifndef READ_H
 #define READ_H
-#include "../../decl/decl.h"
 #include "../str/trm.h"
+#ifdef NO_LIB_C
+#include "../../decl/decl.h"
+extern long read(int, char *, unsigned long);
+#else
+#include <unistd.h>
+#endif
 
 static inline char* readinpt(void)
 {
-    extern long read(int, char *, unsigned long);
-
     static char buf[8192];
     ssize_t readbytes;
 

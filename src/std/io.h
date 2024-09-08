@@ -1,9 +1,14 @@
 #ifndef IO_H
 #define IO_H
 
-#include "io/putmsg.h"
+#ifdef IO
 #include "io/write.h"
-#include "io/echo.h"
 #include "io/read.h"
+#endif
+
+#ifdef SYSIO
+#include "io/putmsg.h"
+#include "io/echo.h"
+#endif
 
 #endif
