@@ -8,18 +8,19 @@ typedef long ssize_t;
 
 static inline char* var(int var);
 int proc(char inpt[]);
+void stdshell(void);
 
 inline void putchar(char c)
 {
-    extern long write(int, const char *, unsigned long);
-    (void) write(1, &c, 1);
+    extern long _write(int, const char *, unsigned long);
+    (void) _write(1, &c, 1);
 }
 
 inline char getchar()
 {
-    extern long read(int, char *, unsigned long);
+    extern long __read(int, char *, unsigned long);
     char c;
-    (void) read(0, &c, 1);
+    (void) __read(0, &c, 1);
     return c;
 }
 
