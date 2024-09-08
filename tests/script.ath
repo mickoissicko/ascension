@@ -1,0 +1,11 @@
+via ath.
+!indent_sz = 4
+begin.
+    include Std::System.
+    include Std::IO.
+
+    begin def start
+        echo "Hello\n".
+        cd '..'.
+    end
+end.
