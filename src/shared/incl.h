@@ -13,7 +13,7 @@
 #ifdef MAIN
 #include <stdio.h>
 void getsh(FILE* fp, char file[]);
-int parse(FILE* fp, int _sz);
+int interpreter(FILE* fp, int _sz);
 #endif
 
 void stdparse(char str[], char label[]);
